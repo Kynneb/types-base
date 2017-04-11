@@ -1,0 +1,14 @@
+<package>
+    <description brief="Basic robotic data types for TASTE">
+        The base package defines types that are generally useful for robotic systems.
+    </description>
+    <author>GMV</author>
+    <copyright>
+        GMV S.A.
+    </copyright>
+    <license>LGPL v2 or later</license>
+
+    <depend package="tools/cmake"/>
+    <depend package="base/types"/>
+    <tags>stable</tags>
+</package>
