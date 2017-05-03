@@ -28,20 +28,20 @@ if (NOT DEFINED ENV{AUTOPROJ_CURRENT_ROOT})
     message(FATAL_ERROR "Environment variable AUTOPROJ_CURRENT_ROOT not set. Run env.sh.")
 endif()
 
-find_package(Sargon)
+##find_package(Sargon)
 
-message(STATUS "Running asn-generate-c.sh script")
-execute_process(COMMAND ${CMAKE_SOURCE_DIR}/scripts/asn-generate-c.sh ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/asn RESULT_VARIABLE CMD_RESULT)
+message(STATUS "Running import-asn-types.sh script")
+
+execute_process(COMMAND ${CMAKE_SOURCE_DIR}/scripts/import-asn-types.sh ENV{AUTOPROJ_TASTE_ROOT} ${CMAKE_SOURCE_DIR}/asn RESULT_VARIABLE CMD_RESULT)
+
 if (NOT ${CMD_RESULT} EQUAL 0)
     message(FATAL_ERROR "Error compiling ASN.1 files")
 endif()
 
-set(SARGON_USE_CXX11 TRUE)
-set(CMAKE_BUILD_TYPE $ENV{CMAKE_BUILD_TYPE})
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-sargon_init(asn1_types 1.0)
-sargon_standard_layout()
+#set(SARGON_USE_CXX11 TRUE)
+#set(CMAKE_BUILD_TYPE $ENV{CMAKE_BUILD_TYPE})
+#set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+#sargon_init(asn1_types 1.0)
+#sargon_standard_layout()
 
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/asn/base DESTINATION share/taste/asn1_types)
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/asn/drivers DESTINATION share/taste/asn1_types)
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/asn/sargon DESTINATION share/taste/asn1_types)
+#install(DIRECTORY ${CMAKE_SOURCE_DIR}/asn/base DESTINATION share/taste/asn1_types)

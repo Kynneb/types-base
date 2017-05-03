@@ -8,7 +8,5 @@
     </copyright>
     <license>LGPL v2 or later</license>
 
-    <depend package="tools/cmake"/>
-    <depend package="base/types"/>
     <tags>stable</tags>
 </package>
