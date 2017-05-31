@@ -23,16 +23,22 @@
 # executed from 'project/build' with 'cmake ../'.
 cmake_minimum_required(VERSION 2.6)
 
+project(types-base)
+
 # Check SARGON environment
-if (NOT DEFINED ENV{AUTOPROJ_CURRENT_ROOT})
-    message(FATAL_ERROR "Environment variable AUTOPROJ_CURRENT_ROOT not set. Run env.sh.")
-endif()
+#if (NOT DEFINED ENV{AUTOPROJ_CURRENT_ROOT})
+#    message(FATAL_ERROR "Environment variable AUTOPROJ_CURRENT_ROOT not set. Run env.sh.")
+#endif()
 
 ##find_package(Sargon)
 
-message(STATUS "Running import-asn-types.sh script")
+message(STATUS "Running install-asn-types.sh script")
 
-execute_process(COMMAND ${CMAKE_SOURCE_DIR}/scripts/import-asn-types.sh ENV{AUTOPROJ_TASTE_ROOT} ${CMAKE_SOURCE_DIR}/asn RESULT_VARIABLE CMD_RESULT)
+FILE(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/install)
+
+message(STATUS "${CMAKE_SOURCE_DIR}/scripts/install-asn-types.sh ${CMAKE_SOURCE_DIR}/install ${CMAKE_SOURCE_DIR}/asn ${CMAKE_PROJECT_NAME}")
+
+execute_process(COMMAND ${CMAKE_SOURCE_DIR}/scripts/install-asn-types.sh ${CMAKE_SOURCE_DIR}/install ${CMAKE_SOURCE_DIR}/asn ${CMAKE_PROJECT_NAME} RESULT_VARIABLE CMD_RESULT)
 
 if (NOT ${CMD_RESULT} EQUAL 0)
     message(FATAL_ERROR "Error compiling ASN.1 files")
