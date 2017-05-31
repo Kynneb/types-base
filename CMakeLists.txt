@@ -38,7 +38,10 @@ FILE(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/install)
 
 message(STATUS "${CMAKE_SOURCE_DIR}/scripts/install-asn-types.sh ${CMAKE_SOURCE_DIR}/install ${CMAKE_SOURCE_DIR}/asn ${CMAKE_PROJECT_NAME}")
 
-execute_process(COMMAND ${CMAKE_SOURCE_DIR}/scripts/install-asn-types.sh ${CMAKE_SOURCE_DIR}/install ${CMAKE_SOURCE_DIR}/asn ${CMAKE_PROJECT_NAME} RESULT_VARIABLE CMD_RESULT)
+execute_process(COMMAND ${CMAKE_SOURCE_DIR}/scripts/install-asn-types.sh
+#${CMAKE_SOURCE_DIR}/asn
+#${CMAKE_SOURCE_DIR}/install 
+${CMAKE_PROJECT_NAME} RESULT_VARIABLE CMD_RESULT)
 
 if (NOT ${CMD_RESULT} EQUAL 0)
     message(FATAL_ERROR "Error compiling ASN.1 files")
