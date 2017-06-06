@@ -45,12 +45,14 @@ message(STATUS "Running install-asn-types.sh script")
 #    message(FATAL_ERROR "Error compiling ASN.1 files")
 #endif()
 
-set(GENERATED_AADL ${CMAKE_PROJECT_NAME}.aadl)
+set(GENERATED_AADL "${CMAKE_PROJECT_NAME}.aadl")
 
 add_custom_command(OUTPUT ${GENERATED_AADL}
-		   COMMAND sh "-c" "${CMAKE_SOURCE_DIR}/scripts/install-asn-types.sh ${CMAKE_SOURCE_DIR}/asn ${CMAKE_BINARY_DIR}/aadl ${CMAKE_PROJECT_NAME})
+		   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+		   COMMAND sh "-c" "${CMAKE_SOURCE_DIR}/scripts/install-asn-types.sh ${CMAKE_SOURCE_DIR}/asn ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_PROJECT_NAME}")
 
-add_custom_target(asn2aadl DEPENDS ${GENERATED_AADL})
+add_custom_target(asn2aadl ALL DEPENDS ${GENERATED_AADL})
+
 
 #set(SARGON_USE_CXX11 TRUE)
 #set(CMAKE_BUILD_TYPE $ENV{CMAKE_BUILD_TYPE})
@@ -58,10 +60,10 @@ add_custom_target(asn2aadl DEPENDS ${GENERATED_AADL})
 #sargon_init(asn1_types 1.0)
 #sargon_standard_layout()
 
-install(TARGET aadl
-  	FILE ${GENERATED_AADL}
-	DESTINATION ${CMAKE_INSTALL_DIR}/types/${CMAKE_PROJECT_NAME})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${GENERATED_AADL}
+	DESTINATION ${CMAKE_INSTALL_PREFIX}/types/${CMAKE_PROJECT_NAME})
 
-#install(FILE ${GENERATED_AADL} DESTINATION ${CMAKE_INSTALL_DIR}/install)
+#install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+#	DESTINATION "${CMAKE_SOURCE_DIR}/install")
 
-message(STATUS "installed types")
+#message(STATUS "installed types")
